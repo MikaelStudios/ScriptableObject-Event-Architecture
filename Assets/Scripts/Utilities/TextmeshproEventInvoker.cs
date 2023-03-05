@@ -11,6 +11,7 @@ public class TextmeshproEventInvoker : MonoBehaviour
     public string m_suffix;
 
     [Header("PlayerPrefs")]
+    public bool m_usePref;
     [ShowIf("isPlayerPrefs")] public string m_prefKey;
     [ShowIf("isPlayerPrefs")] public PlayerPrefsDataType playerPrefsDataType;
     private void Awake()
@@ -21,25 +22,25 @@ public class TextmeshproEventInvoker : MonoBehaviour
     {
         OnEnable();
     }
-    bool isPlayerPrefs() { return true; }
+    bool isPlayerPrefs() { return m_usePref; }
     private void OnEnable()
     {
+        if (isPlayerPrefs())
+            switch (playerPrefsDataType)
+            {
+                case PlayerPrefsDataType.FLOAT:
+                    Invoke(PlayerPrefs.GetFloat(m_prefKey));
+                    break;
 
-        switch (playerPrefsDataType)
-        {
-            case PlayerPrefsDataType.FLOAT:
-                Invoke(PlayerPrefs.GetFloat(m_prefKey));
-                break;
+                case PlayerPrefsDataType.STRING:
+                    InvokeStr(PlayerPrefs.GetString(m_prefKey));
+                    break;
 
-            case PlayerPrefsDataType.STRING:
-                InvokeStr(PlayerPrefs.GetString(m_prefKey));
-                break;
+                case PlayerPrefsDataType.INT:
+                    Invoke(PlayerPrefs.GetInt(m_prefKey));
+                    break;
 
-            case PlayerPrefsDataType.INT:
-                Invoke(PlayerPrefs.GetInt(m_prefKey));
-                break;
-
-        }
+            }
 
 
     }

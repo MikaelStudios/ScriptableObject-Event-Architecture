@@ -5,11 +5,11 @@ public class LevelProgressionFloatEvent : MonoBehaviour
 {
     public float multiplier = 10;
 
-    public UnityEvent<string> InvokeEvent = new UnityEvent<string>();
+    public UnityEvent<float> InvokeEvent = new UnityEvent<float>();
 
     public void Invoke(float f)
     {
-        InvokeEvent.Invoke(((f * multiplier)).ToString());
+        InvokeEvent.Invoke(((f * multiplier)));
 
     }
 }
